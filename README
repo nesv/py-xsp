@@ -1,0 +1,10 @@
+ ------------------------------------------------------------------------
+| py-xsp                                                                 |
+|                                                                        |
+| A Python library for parsing settings files, written in XML.           |
+ ------------------------------------------------------------------------
+
+This aims to be a rather simple library - all it requires is the py-xml 
+package, which is present in most default Python installs. Specifically,
+it requires the xml.dom.minidom package.
+
