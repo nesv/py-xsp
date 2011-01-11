@@ -8,3 +8,8 @@ This aims to be a rather simple library - all it requires is the py-xml
 package, which is present in most default Python installs. Specifically,
 it requires the xml.dom.minidom package.
 
+The library was initially written as a way to parse settings files, which were 
+kept in XML format, and represent them as a usable, native Python type. The 
+intent here is to lessen the amount of knowledge of the Python xml package 
+(and sub-packages) required when it comes to parsing XML files, and 
+subsequently cut down on the amount of code required to parse XML files.
