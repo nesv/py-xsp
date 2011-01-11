@@ -1,0 +1,25 @@
+******************************************************************************
+* vocabulary.txt
+*
+* This README briefly (but hopefully thoroughly) explains how a vocabulary
+* is to be structured before it is used by a parser.
+******************************************************************************
+
+VOCABULARY = {"tag name" : {"attribute name" : mapping_function, ...}}
+
+- The toplevel keys in the vocabulary are the tag names to search for.
+- The "value" half of each key-value pair in the dictionary, is another
+  dictionary, where in its key-value pairs, the key is the name of the
+  attribute to parse and the value is the function to map the parse
+  attribute's value with.
+
+Here is an example:
+
+>>> import xsp
+>>> vocab = {"module" : {"name" : str, "load" : int}}
+>>> settings = xsp.parse("/path/to/settings_file.xml", vocab)
+>>> settings
+{'module': [{'name': 'vc', 'load': 1}, {'name': 'printing', 'load': 1}]}
+>>>
+
+
