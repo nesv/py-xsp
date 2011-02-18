@@ -38,10 +38,10 @@ def __parse_element(element, vocabulary):
 			# length list and re-case it using the map() function.
 			for attribute in vocabulary[tag_name].keys():
 				# Check to make sure the attribute we are looking at is
-				# not another 'dict' object. If it is, use the magic of
-				# recursion to parse it out!
-				if type(attribute) == type(dict()):
-					nested_element = __parse_element(node, attribute)
+				# not None. If it is, it is a sub-vocabulary, so use the
+				# magic of recursion to parse it out!
+				if attribute == None:
+					nested_element = __parse_element(node, vocabulary[tag_name][attribute])
 					settings[tag_name][-1][attribute] = nested_element
 				elif node.hasAttribute(attribute):
 					a = str(node.getAttribute(attribute))
