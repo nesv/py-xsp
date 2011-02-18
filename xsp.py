@@ -57,14 +57,12 @@ def parse(settings_file, vocabulary):
 	if type(vocabulary) != type(dict()):
 		print("ERROR: xsp.parse()")
 		raise ParseException("The provided library is not a dictionary.")
-		return None
 	
 	# Next, check to make sure the settings file does exist.
 	if os.path.exists(settings_file):
 		infile = xml.dom.minidom.parse(settings_file)
 	else:
 		raise ParseException("Provided path to settings file not valid; file does not exist")
-		return None
 	
 	# Make sure the XML document is structured correctly.
 	# There should be only one (1) child node when the file is open. From this
@@ -73,7 +71,6 @@ def parse(settings_file, vocabulary):
 		root_node = infile.firstChild
 	else:
 		raise ParseException("Improperly formatted settings file; there is no document node.")
-		return None
 	
 	# Return our settings.
 	return __parse_element(root_node, vocabulary)
