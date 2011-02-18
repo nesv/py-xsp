@@ -1,5 +1,0 @@
-To install py-xsp, just run
-	$ sudo make install
-
-The install script will prompt you for a path to copy the "xsp.py" module 
-to, and present any errors that occurred.
