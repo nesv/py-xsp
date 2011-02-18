@@ -1,0 +1,8 @@
+Changelog:
+
+0.2:
+	+ Parsing nested elements.
+	+ Added a Makefile for installation.
+
+0.1:
+	* Initial release.
