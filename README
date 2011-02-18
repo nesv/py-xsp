@@ -1,7 +1,7 @@
  ------------------------------------------------------------------------
 | py-xsp                                                                 |
 |                                                                        |
-| A Python library for parsing settings files, written in XML.           |
+| A Python library for parsing XML files.                                |
  ------------------------------------------------------------------------
 
 This aims to be a rather simple library - all it requires is the py-xml 
