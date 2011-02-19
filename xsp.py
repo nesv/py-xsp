@@ -10,7 +10,7 @@ class ParseException(Exception):
 	def __str__(self):
 		return repr(self.MESSAGE)
 
-def __parse_element(element, vocabulary):
+def __parse_element(element, vocabulary, suppress_warnings):
 	# Initialize the dictionary we are going to return.
 	settings = {}
 	
@@ -48,11 +48,12 @@ def __parse_element(element, vocabulary):
 					a = map(vocabulary[tag_name][attribute], [a])
 					settings[tag_name][-1][attribute] = a[0]
 				else:
-					print("WARNING: Element does not match vocabulary rule; skipping.")
+					if suppress_warnings:
+						print("WARNING: Element does not match vocabulary rule; skipping.")
 					continue
 	return settings
 
-def parse(settings_file, vocabulary):
+def parse(settings_file, vocabulary, suppress_warnings = False):
 	# Check to make sure the vocabulary is a dictionary.
 	if type(vocabulary) != type(dict()):
 		print("ERROR: xsp.parse()")
@@ -73,5 +74,5 @@ def parse(settings_file, vocabulary):
 		raise ParseException("Improperly formatted settings file; there is no document node.")
 	
 	# Return our settings.
-	return __parse_element(root_node, vocabulary)
+	return __parse_element(root_node, vocabulary, suppress_warnings)
 
