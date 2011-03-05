@@ -41,7 +41,7 @@ def __parse_element(element, vocabulary, suppress_warnings):
 				# not None. If it is, it is a sub-vocabulary, so use the
 				# magic of recursion to parse it out!
 				if attribute == None:
-					nested_element = __parse_element(node, vocabulary[tag_name][attribute], suppress_warnings)
+					nested_element = __parse_element(node, vocabulary[tag_name][attribute])
 					settings[tag_name][-1][attribute] = nested_element
 				elif node.hasAttribute(attribute):
 					a = str(node.getAttribute(attribute))
