@@ -74,8 +74,7 @@ def parse(settings_file, vocabulary, suppress_warnings = False):
 	# Addendum 20110316
 	# It would appear that comments before the document node confuse xsp.
 	# This is modified to attempt to find the actual child node where the
-	# data is. Truth be told, it is not all that sophisticated; it just
-	# goes with the first element that has child nodes.
+	# data is.
 	if len(infile.childNodes) == 1:
 		root_node = infile.firstChild
 	elif len(infile.childNodes) > 1:
