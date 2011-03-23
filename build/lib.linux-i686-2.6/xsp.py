@@ -74,8 +74,7 @@ def parse(settings_file, vocabulary, suppress_warnings = False):
 	# Addendum 20110316
 	# It would appear that comments before the document node confuse xsp.
 	# This is modified to attempt to find the actual child node where the
-	# data is. Truth be told, it is not all that sophisticated; it just
-	# goes with the first element that has child nodes.
+	# data is.
 	if len(infile.childNodes) == 1:
 		root_node = infile.firstChild
 	elif len(infile.childNodes) > 1:
@@ -89,13 +88,3 @@ def parse(settings_file, vocabulary, suppress_warnings = False):
 	# Return our settings.
 	return __parse_element(root_node, vocabulary, suppress_warnings)
 
-def yn2bool(s):
-	"""bool yn2bool(str) - An added conversion function, to change
-	"yes/no" values into boolean True and False values. If the parameter
-	is not able to be parsed as a "yes/no" value, then this function
-	returns nothing."""
-	s = s.lower()
-	if s == "yes" or s == "y":
-		return True
-	elif s == "no" or s == "n":
-		return False
