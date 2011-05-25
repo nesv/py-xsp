@@ -1,5 +1,11 @@
 Changelog:
 
+0.3:
+	* Fixed a "bug" where XSP would recognize long comment nodes, before
+	an actual document element.
+	- Removed Makefile for installation.
+	+ Used distutils to package up, and install XSP.
+
 0.2:
 	+ Parsing nested elements.
 	+ Added a Makefile for installation.

@@ -5,3 +5,7 @@
 *.bzr
 .bzrignore
 .bzr/*
+dist 
+build
+.gitignore
+MANIFEST
