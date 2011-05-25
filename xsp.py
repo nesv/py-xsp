@@ -99,3 +99,26 @@ def yn2bool(s):
 		return True
 	elif s == "no" or s == "n":
 		return False
+
+
+def __write_element(parent, vocabulary):
+	"""A small, internal function for recursively writing out elements."""
+	
+
+def write(filename, vocabulary, indent_char = '\t'):
+	"""write(filename, vocabulary, indent_char = '\t') - Write a 
+	vocabulary (a glorified, Python dictionary) to file."""
+	# Start the XML document.
+	document = xml.dom.minidom.Document()
+	# The initial element in the document is the first key in the provided
+	# vocabulary. After that is a "None" key, from which all sub-keys are
+	# contained (analogous to parsing nested elements).
+	first_key = vocabulary.keys()[0]
+	first_value = vocabulary.pop(first_key)
+	dnode = document.createElement(first_key)
+	# Check and see if the value-field TODO FINISH
+	if type(first_value) == type({}):
+		if len(first_value.keys()) > 0:
+			for k in first_value.keys():
+				dnode.setAttribute(k, first_value[k])
+	document.appendChild(dnode)
