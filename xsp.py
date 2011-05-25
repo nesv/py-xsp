@@ -100,25 +100,25 @@ def yn2bool(s):
 	elif s == "no" or s == "n":
 		return False
 
+def __create_element(parent, name, vocabulary):
+	"""xml.dom.minidom.Element __create_element(document, name, vocabulary) -
+	A small, internal function for recursively adding child elements to the 
+	provided parent element."""
+	element = parent.createElement(name)
+	for attribute in vocabulary:
+		element.setAttribute(attribute, vocabulary[attribute])
+	return element
 
-def __write_element(parent, vocabulary):
-	"""A small, internal function for recursively writing out elements."""
-	
-
-def write(filename, vocabulary, indent_char = '\t'):
-	"""write(filename, vocabulary, indent_char = '\t') - Write a 
+def write(stream, vocabulary, indent_char = '\t'):
+	"""write(stream, vocabulary, indent_char = '\t') - Write a 
 	vocabulary (a glorified, Python dictionary) to file."""
 	# Start the XML document.
 	document = xml.dom.minidom.Document()
-	# The initial element in the document is the first key in the provided
-	# vocabulary. After that is a "None" key, from which all sub-keys are
-	# contained (analogous to parsing nested elements).
-	first_key = vocabulary.keys()[0]
-	first_value = vocabulary.pop(first_key)
-	dnode = document.createElement(first_key)
-	# Check and see if the value-field TODO FINISH
-	if type(first_value) == type({}):
-		if len(first_value.keys()) > 0:
-			for k in first_value.keys():
-				dnode.setAttribute(k, first_value[k])
-	document.appendChild(dnode)
+	# Create the first document element (which will, subsequently, populate
+	# all elements).
+	name = vocabulary.keys()[0]
+	vocab = vocabulary[name]
+	doc_element = document.createElement(document, vocab)
+	document.appendChild(doc_element)
+	# Write out to file!
+	stream.write(document.toprettyxml(indent = indent_char))

@@ -1,0 +1,10 @@
+<?xml version="1.0" ?>
+<users>
+   <user id="0" name="John" surname="Smith" />
+   <user id="1" name="Jane" surname="Doe" />
+ 
+   <group id="0" name="developers">
+      <member user="0" />
+      <member user="1" />
+   </group>
+</users>
