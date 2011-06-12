@@ -111,14 +111,38 @@ def __create_element(parent, name, vocabulary):
 
 def write(stream, vocabulary, indent_char = '\t'):
 	"""write(stream, vocabulary, indent_char = '\t') - Write a 
-	vocabulary (a glorified, Python dictionary) to file."""
+	vocabulary (a glorified, Python dictionary) to file. This function
+	will return True if everything went well; False, otherwise."""
 	# Start the XML document.
 	document = xml.dom.minidom.Document()
-	# Create the first document element (which will, subsequently, populate
-	# all elements).
+	# Check to make sure there is only one top-level key in the
+	# dictionary; if there is only one, it will be the name of our
+	# document element.
+	if len(vocabulary.keys()) > 1:
+		print 'ERROR: There is more than one top-level key.'
+		return False
 	name = vocabulary.keys()[0]
+	# Now, check to make sure that the top-level key points to another
+	# dictionary.
+	if type(vocabulary[name]) != type(dict()):
+		print 'ERROR: Top-level key does not point to a dictionary.'
+		return False
+	doc_element = document.createElement(name)
 	vocab = vocabulary[name]
-	doc_element = document.createElement(document, vocab)
+	for k in vocab.keys():
+		# Should the key be None, then it's time to call our helper
+		# function, which will write out nested elements.
+		if k == None:
+			__nest_element(parent, 
+		# Otherwise, we have ourselves an attribute!
+		else:
+			doc_element.setAttribute(k, vocab[k])
+	# Now, append out document element to the XML document.
 	document.appendChild(doc_element)
 	# Write out to file!
-	stream.write(document.toprettyxml(indent = indent_char))
+	try:
+		stream.write(document.toprettyxml(indent = indent_char))
+	except IOError:
+		print 'IOError: Cannot write to document.'
+		return False
+	return True
