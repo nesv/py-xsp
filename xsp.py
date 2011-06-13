@@ -100,14 +100,18 @@ def yn2bool(s):
 	elif s == "no" or s == "n":
 		return False
 
-def __create_element(parent, name, vocabulary):
-	"""xml.dom.minidom.Element __create_element(document, name, vocabulary) -
-	A small, internal function for recursively adding child elements to the 
+def __nest_element(parent, vocabulary):
+	"""__nest_element(parent, vocabulary)
+	An internal function for recursively adding child elements to the 
 	provided parent element."""
-	element = parent.createElement(name)
-	for attribute in vocabulary:
-		element.setAttribute(attribute, vocabulary[attribute])
-	return element
+	for k in vocabulary.keys():
+		if type(vocabulary[k]) == type(list()):
+			e = parent.createElement(k)
+			for d in vocabulary[k]:
+				for a in d.keys():
+					e.setAttribute(a, d[a])
+		elif k == None:
+			pass
 
 def write(stream, vocabulary, indent_char = '\t'):
 	"""write(stream, vocabulary, indent_char = '\t') - Write a 
@@ -133,7 +137,7 @@ def write(stream, vocabulary, indent_char = '\t'):
 		# Should the key be None, then it's time to call our helper
 		# function, which will write out nested elements.
 		if k == None:
-			__nest_element(parent, 
+			__nest_element(doc_element, k, vocab[k])
 		# Otherwise, we have ourselves an attribute!
 		else:
 			doc_element.setAttribute(k, vocab[k])
