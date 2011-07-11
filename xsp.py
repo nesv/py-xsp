@@ -16,7 +16,7 @@ def __parse_element(element, vocabulary, suppress_warnings):
 	
 	# Every time we come across a new tag name in the vocabulary to parse,
 	# we should create a new list to keep all of the gathered values in.
-	for tag_name in vocabulary.keys():
+	for tag_name in list(vocabulary.keys()):
 		settings[tag_name] = []
 		
 		# Now, time to search through the root node and find all elements
@@ -36,7 +36,7 @@ def __parse_element(element, vocabulary, suppress_warnings):
 			# key, in the vocabulary.
 			# Then, add the parse attribute value into a single-item
 			# length list and re-case it using the map() function.
-			for attribute in vocabulary[tag_name].keys():
+			for attribute in list(vocabulary[tag_name].keys()):
 				# Check to make sure the attribute we are looking at is
 				# not None. If it is, it is a sub-vocabulary, so use the
 				# magic of recursion to parse it out!
@@ -47,7 +47,7 @@ def __parse_element(element, vocabulary, suppress_warnings):
 					settings[tag_name][-1][attribute] = nested_element
 				elif node.hasAttribute(attribute):
 					a = str(node.getAttribute(attribute))
-					a = map(vocabulary[tag_name][attribute], [a])
+					a = list(map(vocabulary[tag_name][attribute], [a]))
 					settings[tag_name][-1][attribute] = a[0]
 				else:
 					if suppress_warnings:
@@ -104,11 +104,11 @@ def __nest_element(parent, vocabulary):
 	"""__nest_element(parent, vocabulary)
 	An internal function for recursively adding child elements to the 
 	provided parent element."""
-	for k in vocabulary.keys():
+	for k in list(vocabulary.keys()):
 		if type(vocabulary[k]) == type(list()):
 			e = parent.createElement(k)
 			for d in vocabulary[k]:
-				for a in d.keys():
+				for a in list(d.keys()):
 					e.setAttribute(a, d[a])
 		elif k == None:
 			pass
@@ -122,18 +122,18 @@ def write(stream, vocabulary, indent_char = '\t'):
 	# Check to make sure there is only one top-level key in the
 	# dictionary; if there is only one, it will be the name of our
 	# document element.
-	if len(vocabulary.keys()) > 1:
-		print 'ERROR: There is more than one top-level key.'
+	if len(list(vocabulary.keys())) > 1:
+		print('ERROR: There is more than one top-level key.')
 		return False
-	name = vocabulary.keys()[0]
+	name = list(vocabulary.keys())[0]
 	# Now, check to make sure that the top-level key points to another
 	# dictionary.
 	if type(vocabulary[name]) != type(dict()):
-		print 'ERROR: Top-level key does not point to a dictionary.'
+		print('ERROR: Top-level key does not point to a dictionary.')
 		return False
 	doc_element = document.createElement(name)
 	vocab = vocabulary[name]
-	for k in vocab.keys():
+	for k in list(vocab.keys()):
 		# Should the key be None, then it's time to call our helper
 		# function, which will write out nested elements.
 		if k == None:
@@ -147,6 +147,6 @@ def write(stream, vocabulary, indent_char = '\t'):
 	try:
 		stream.write(document.toprettyxml(indent = indent_char))
 	except IOError:
-		print 'IOError: Cannot write to document.'
+		print('IOError: Cannot write to document.')
 		return False
 	return True
