@@ -16,7 +16,7 @@ def __parse_element(element, vocabulary, suppress_warnings):
 	
 	# Every time we come across a new tag name in the vocabulary to parse,
 	# we should create a new list to keep all of the gathered values in.
-	for tag_name in vocabulary.keys():
+	for tag_name in list(vocabulary.keys()):
 		settings[tag_name] = []
 		
 		# Now, time to search through the root node and find all elements
@@ -36,7 +36,7 @@ def __parse_element(element, vocabulary, suppress_warnings):
 			# key, in the vocabulary.
 			# Then, add the parse attribute value into a single-item
 			# length list and re-case it using the map() function.
-			for attribute in vocabulary[tag_name].keys():
+			for attribute in list(vocabulary[tag_name].keys()):
 				# Check to make sure the attribute we are looking at is
 				# not None. If it is, it is a sub-vocabulary, so use the
 				# magic of recursion to parse it out!
@@ -47,7 +47,7 @@ def __parse_element(element, vocabulary, suppress_warnings):
 					settings[tag_name][-1][attribute] = nested_element
 				elif node.hasAttribute(attribute):
 					a = str(node.getAttribute(attribute))
-					a = map(vocabulary[tag_name][attribute], [a])
+					a = list(map(vocabulary[tag_name][attribute], [a]))
 					settings[tag_name][-1][attribute] = a[0]
 				else:
 					if suppress_warnings:
@@ -116,7 +116,7 @@ def write(stream, vocabulary, indent_char = '\t'):
 	document = xml.dom.minidom.Document()
 	# Create the first document element (which will, subsequently, populate
 	# all elements).
-	name = vocabulary.keys()[0]
+	name = list(vocabulary.keys())[0]
 	vocab = vocabulary[name]
 	doc_element = document.createElement(document, vocab)
 	document.appendChild(doc_element)
